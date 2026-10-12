@@ -1,0 +1,184 @@
+/* Label Studio Wizard — injected wizard bar and step visibility */
+
+[data-lsw-hidden] {
+  display: none !important;
+}
+
+.lsw {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  margin: 0 0 12px;
+  padding: 10px 0;
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+  user-select: none;
+}
+
+.lsw__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.lsw__tab {
+  padding: 5px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 999px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 12px;
+  line-height: 1.4;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.lsw__tab:hover {
+  border-color: #6754f4;
+  color: #6754f4;
+}
+
+.lsw__tab:disabled {
+  opacity: 0.45;
+  cursor: default;
+  color: rgba(0, 0, 0, 0.65);
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+.lsw__tabs--compact {
+  gap: 4px;
+}
+
+.lsw__tabs--compact .lsw__tab {
+  padding: 3px 7px;
+  font-size: 11px;
+}
+
+.lsw__current {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.75);
+  margin: 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+[data-lsw-invalid] {
+  outline: 2px solid #c93636;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.lsw__error {
+  margin: 8px 0 12px;
+  color: #b42318;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.lsw__tab--active,
+.lsw__tab--active:hover {
+  border-color: #6754f4;
+  background: #6754f4;
+  color: #fff;
+}
+
+.lsw__tab--done::after {
+  content: " ✓";
+  color: #1d9e57;
+}
+
+.lsw__tab--active.lsw__tab--done::after {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.lsw__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lsw__btn {
+  padding: 6px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 6px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.lsw__btn:hover:not(:disabled) {
+  border-color: #6754f4;
+  color: #6754f4;
+}
+
+.lsw__btn--next {
+  background: #6754f4;
+  border-color: #6754f4;
+  color: #fff;
+}
+
+.lsw__btn--next:hover:not(:disabled) {
+  background: #5845e0;
+  border-color: #5845e0;
+  color: #fff;
+}
+
+.lsw__btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.lsw__counter {
+  margin-left: auto;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.lsw__image-tools {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.09);
+}
+
+.lsw__image-buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.lsw__image-buttons .lsw__btn {
+  padding: 5px 9px;
+}
+
+.lsw__zoom {
+  min-width: 42px;
+  text-align: center;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.lsw__hint {
+  margin-top: 8px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+[data-lsw-pan],
+[data-lsw-pan] * {
+  cursor: grab !important;
+}
+
+[data-lsw-dragging],
+[data-lsw-dragging] * {
+  cursor: grabbing !important;
+  user-select: none !important;
+}

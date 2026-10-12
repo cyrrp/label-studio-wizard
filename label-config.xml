@@ -1,0 +1,105 @@
+<View style="display:flex; flex-direction:row; align-items:flex-start; gap:16px;">
+  <View style="flex:1 1 auto; min-width:0; position:sticky; top:12px; align-self:flex-start;">
+    <Image name="img" value="$image" zoom="true" zoomControl="true" rotateControl="true"/>
+  </View>
+
+  <View style="flex:0 0 360px; max-width:360px;">
+
+    <!-- Шаг 1: что в кадре -->
+    <View className="wz-step wz-step-modality">
+      <Header value="Что на изображении?"/>
+      <Choices name="modality" toName="img" choice="single" required="true" requiredMessage="Выберите тип изображения">
+        <Choice value="Книжка документа" hotkey="1"/>
+        <Choice value="Бумажная копия / распечатка" hotkey="2"/>
+        <Choice value="Дисплей" hotkey="3"/>
+        <Choice value="Дипфейк" hotkey="4"/>
+        <Choice value="Граф. редактор" hotkey="5"/>
+        <Choice value="Документа нет" hotkey="6"/>
+        <Choice value="Не определяю" hotkey="0" hint="Не могу оценить тип изображения"/>
+      </Choices>
+      <View visibleWhen="choice-selected" whenTagName="modality" whenChoiceValue="Не определяю">
+        <TextArea name="comment_modality" toName="img" placeholder="Что мешает определить тип? (необязательно)"/>
+      </View>
+    </View>
+
+    <!-- Шаг 2: резидентство (типовой ответ предвыбран — клик нужен только для нерезидента) -->
+    <View className="wz-step wz-step-resident" visibleWhen="choice-selected" whenTagName="modality"
+          whenChoiceValue="Книжка документа">
+      <Header value="Резидентство"/>
+      <Choices name="resident" toName="img" choice="single" required="true" requiredMessage="Укажите резидентство">
+        <Choice value="Паспорт РФ" hotkey="1" selected="true"/>
+        <Choice value="Документ нерезидента" hotkey="2"/>
+        <Choice value="Не определяю" hotkey="3"/>
+      </Choices>
+    </View>
+
+    <!-- Шаг 3: страницы (только паспорт РФ; типовой ответ предвыбран) -->
+    <View className="wz-step wz-step-pages" visibleWhen="choice-selected" whenTagName="resident" whenChoiceValue="Паспорт РФ">
+      <Header value="Страницы паспорта"/>
+      <Choices name="pages" toName="img" choice="single" required="true" requiredMessage="Укажите страницу паспорта">
+        <Choice value="Разворот: фото и сведения о выдаче" hotkey="1" selected="true"/>
+        <Choice value="Другое" hotkey="2"/>
+      </Choices>
+    </View>
+
+    <!-- Шаг 4: отсутствующие элементы (только для главного разворота паспорта РФ) -->
+    <View className="wz-step wz-step-missing" visibleWhen="choice-selected" whenTagName="modality"
+          whenChoiceValue="Книжка документа">
+      <View visibleWhen="choice-selected" whenTagName="pages" whenChoiceValue="Разворот: фото и сведения о выдаче">
+        <Header value="Отсутствующие элементы"/>
+        <Choices name="defects_missing" toName="img" choice="multiple" showInline="true">
+          <Choice value="Нет подписи паспортиста" hotkey="1"/>
+          <Choice value="Нет подписи владельца" hotkey="2"/>
+          <Choice value="Нет печати" hotkey="3"/>
+          <Choice value="Нет фотографии" hotkey="4"/>
+          <Choice value="Поля бланка не заполнены" hotkey="5"/>
+          <Choice value="Нет защитных элементов" hotkey="6"/>
+          <Choice value="Защитные элементы нельзя проверить" hotkey="7"/>
+        </Choices>
+      </View>
+    </View>
+
+    <!-- Шаг 5: изменения и повреждения (только для главного разворота паспорта РФ) -->
+    <View className="wz-step wz-step-changes" visibleWhen="choice-selected" whenTagName="modality"
+          whenChoiceValue="Книжка документа">
+      <View visibleWhen="choice-selected" whenTagName="pages" whenChoiceValue="Разворот: фото и сведения о выдаче">
+        <Header value="Изменения и повреждения"/>
+        <Choices name="defects_changes" toName="img" choice="multiple" showInline="true">
+          <Choice value="Вклейка фото" hotkey="1"/>
+          <Choice value="Физические изменения" hotkey="2"/>
+          <Choice value="Повреждён" hotkey="3"/>
+          <Choice value="Другое" hotkey="4"/>
+        </Choices>
+        <View visibleWhen="choice-selected" whenTagName="defects_changes" whenChoiceValue="Другое">
+          <TextArea name="comment_defects" toName="img" placeholder="Опишите (необязательно)"/>
+        </View>
+      </View>
+    </View>
+
+    <!-- Шаг 6: читаемость -->
+    <View className="wz-step wz-step-readability" visibleWhen="choice-selected" whenTagName="modality"
+          whenChoiceValue="Книжка документа,Бумажная копия / распечатка,Дисплей,Дипфейк,Граф. редактор">
+      <Header value="Читаемость — что мешает читать?"/>
+      <Choices name="readability" toName="img" choice="multiple" showInline="true">
+        <Choice value="Блики" hotkey="1"/>
+        <Choice value="Блюр" hotkey="2"/>
+        <Choice value="Плохое освещение" hotkey="3"/>
+        <Choice value="Перекрыто" hotkey="4"/>
+        <Choice value="Не все поля в кадре" hotkey="5"/>
+        <Choice value="Печатный текст закрыт подписью/рукописным" hotkey="6"/>
+        <Choice value="Лицо на фото не различимо" hotkey="7"/>
+        <Choice value="Другое" hotkey="8"/>
+      </Choices>
+      <View visibleWhen="choice-selected" whenTagName="readability" whenChoiceValue="Другое">
+        <TextArea name="comment_readability" toName="img" placeholder="Опишите, что мешает читать (необязательно)"/>
+      </View>
+    </View>
+
+    <!-- Шаг 7: комментарий -->
+    <View className="wz-step wz-step-comment">
+      <Header value="Комментарий"/>
+      <TextArea name="comment" toName="img" placeholder="Необязательно: спорный случай или проблема вне списка" rows="3"/>
+    </View>
+
+  </View>
+</View>

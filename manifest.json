@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Label Studio Wizard",
+  "version": "1.0.0",
+  "description": "Stepped wizard UI and per-step hotkeys for the Label Studio labeling interface",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://label-studio-cv.prod.bozon.tech/*",
+        "http://label-studio-cv.prod.bozon.tech/*",
+        "http://localhost:8080/*",
+        "http://127.0.0.1:8080/*"
+      ],
+      "js": ["content.js"],
+      "css": ["wizard.css"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": false
+    }
+  ]
+}
